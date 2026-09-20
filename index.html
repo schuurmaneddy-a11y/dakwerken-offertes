@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offertes - Antwerpse Dakwerken</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 30px;
+        }
+
+        h1 { color: #2c3e50; margin-bottom: 8px; font-size: 2em; }
+
+        .subtitle { color: #7f8c8d; margin-bottom: 25px; font-size: 0.95em; }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 30px; height: 30px;
+            border: 4px solid #ddd;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .progress-bar {
+            width: 300px; height: 6px;
+            background: #e5e5e5;
+            border-radius: 3px;
+            margin: 18px auto 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.2s;
+        }
+
+        .filters {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            border-left: 4px solid #667eea;
+        }
+
+        .filter-group { display: flex; gap: 8px; align-items: center; }
+
+        .filter-group label {
+            font-weight: 600; color: #555;
+            font-size: 0.9em; white-space: nowrap;
+        }
+
+        .filter-group input, .filter-group select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9em;
+            min-width: 150px;
+        }
+
+        .filter-group select { max-width: 320px; }
+
+        .filter-group input:focus, .filter-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        .regie-toggle {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 0.9em; font-weight: 600; color: #555;
+            cursor: pointer;
+        }
+
+        .regie-toggle input { min-width: auto; width: 16px; height: 16px; cursor: pointer; }
+
+        .bon-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: 1.4fr 1.4fr 0.7fr 0.9fr auto;
+            gap: 25px;
+            align-items: start;
+        }
+
+        .bon-header h2 { font-size: 1.8em; margin-bottom: 5px; }
+
+        .bon-info-item { display: flex; flex-direction: column; min-width: 0; }
+
+        .bon-info-label {
+            font-size: 0.85em; opacity: 0.9;
+            margin-bottom: 4px; font-weight: 600;
+        }
+
+        .bon-info-value { font-size: 1.1em; font-weight: 500; word-break: break-word; }
+
+        .navigation { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
+
+        .nav-buttons { display: flex; gap: 10px; }
+
+        .nav-buttons button {
+            background: white; color: #667eea;
+            border: 2px solid white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-buttons button:hover:not(:disabled) { background: #f0f0ff; transform: translateY(-2px); }
+        .nav-buttons button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+        .counter { font-size: 0.9em; opacity: 0.95; white-space: nowrap; }
+
+        .table-wrapper { overflow-x: auto; margin-top: 10px; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+
+        thead { background: #f8f9fa; border-bottom: 2px solid #667eea; }
+
+        thead th {
+            padding: 12px; text-align: left;
+            font-weight: 600; color: #2c3e50;
+            position: sticky; top: 0; background: #f8f9fa;
+        }
+
+        tbody tr { border-bottom: 1px solid #e5e5e5; }
+        tbody tr:hover { background: #f8f9fa; }
+        tbody tr.regie { background: #ffe8cc; }
+        tbody tr.regie:hover { background: #ffd9a8; }
+        tbody tr.hit { background: #fff9c4; }
+        tbody tr.hit:hover { background: #fff59d; }
+
+        td { padding: 12px; vertical-align: top; }
+
+        .col-small { width: 50px; }
+        .col-medium { width: 100px; }
+
+        .lijnnr { font-weight: 600; color: #667eea; }
+        .aantal, .prijs { text-align: right; white-space: nowrap; }
+        .totaal { text-align: right; font-weight: 600; white-space: nowrap; }
+        .dim { text-align: center; color: #7f8c8d; }
+
+        mark { background: #ffd54f; padding: 0 2px; border-radius: 2px; }
+
+        .regie-marker {
+            display: inline-block;
+            background: #ff6b35; color: white;
+            padding: 3px 7px; border-radius: 4px;
+            font-size: 0.78em; font-weight: 600;
+            margin-right: 8px; vertical-align: middle;
+        }
+
+        .bon-totaal {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 15px;
+            text-align: right;
+            font-size: 1.1em; font-weight: 600;
+            margin-top: 10px;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .no-results {
+            text-align: center; padding: 60px 20px;
+            color: #7f8c8d; font-size: 1.1em;
+        }
+
+        .error-box {
+            background: #ffebee; border-left: 4px solid #e53935;
+            padding: 20px; border-radius: 6px; color: #b71c1c;
+        }
+
+        #content { min-height: 400px; }
+
+        @media (max-width: 1100px) {
+            .bon-header { grid-template-columns: 1fr 1fr; }
+            .navigation { align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Offertes Browser</h1>
+        <div class="subtitle">Antwerpse Dakwerken &mdash; alle offertes met alle regelitems</div>
+
+        <div class="filters" id="filters" style="display: none;">
+            <div class="filter-group">
+                <label for="filterBon">Bon Nr:</label>
+                <input type="text" id="filterBon" placeholder="bijv. 2026238">
+            </div>
+            <div class="filter-group">
+                <label for="filterProject">Project:</label>
+                <select id="filterProject">
+                    <option value="">-- Alle projecten --</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filterTekst">Zoek in beschrijving:</label>
+                <input type="text" id="filterTekst" placeholder="bijv. regie, uren, man">
+            </div>
+            <label class="regie-toggle">
+                <input type="checkbox" id="filterRegie"> Alleen bonnen met regiewerk
+            </label>
+        </div>
+
+        <div id="content">
+            <div class="loading">
+                <div><span class="spinner"></span> Offertes laden&hellip;</div>
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                <div id="progressText" style="margin-top:10px; font-size:0.85em;">Verbinden&hellip;</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        let filteredBons = [];
+        let allBons = [];
+        let META = {};
+
+        function setProgress(pct, text) {
+            const fill = document.getElementById('progressFill');
+            const txt = document.getElementById('progressText');
+            if (fill) fill.style.width = pct + '%';
+            if (txt && text) txt.textContent = text;
+        }
+
+        async function loadData() {
+            try {
+                setProgress(5, 'Data downloaden…');
+
+                const response = await fetch('data.bin');
+                if (!response.ok) throw new Error('HTTP ' + response.status + ' bij ophalen van data.bin');
+
+                // Stream the download so we can show real progress
+                const total = parseInt(response.headers.get('content-length') || '0', 10);
+                const reader = response.body.getReader();
+                const chunks = [];
+                let received = 0;
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    chunks.push(value);
+                    received += value.length;
+                    if (total) {
+                        setProgress(5 + (received / total) * 65,
+                            'Downloaden… ' + (received / 1048576).toFixed(1) + ' / ' + (total / 1048576).toFixed(1) + ' MB');
+                    } else {
+                        setProgress(40, 'Downloaden… ' + (received / 1048576).toFixed(1) + ' MB');
+                    }
+                }
+
+                let blob = new Blob(chunks);
+                chunks.length = 0;
+
+                setProgress(75, 'Uitpakken…');
+
+                let text;
+                if (typeof DecompressionStream !== 'undefined') {
+                    const ds = new DecompressionStream('gzip');
+                    text = await new Response(blob.stream().pipeThrough(ds)).text();
+                } else {
+                    throw new Error('Je browser ondersteunt geen gzip-decompressie. Gebruik een recente versie van Chrome, Edge, Firefox of Safari.');
+                }
+
+                setProgress(90, 'Verwerken…');
+
+                const payload = JSON.parse(text);
+                text = null;
+                META = payload.meta || {};
+
+                // Expand compact arrays back into objects
+                allBons = payload.b.map(function (row) {
+                    return {
+                        Bon_Nr: row[0],
+                        Datum: row[1],
+                        Project: row[2],
+                        Lijnen: row[3].map(function (l) {
+                            return {
+                                Lijnnr: l[0], Hoofdstuk: l[1], Deelstuk: l[2], Volgnr: l[3],
+                                Groep: l[4], Nr1: l[5], Beschrijving: l[6], Aantal: l[7],
+                                Eenheid: l[8], Prijs: l[9], Totaal: l[10], IsRegie: !!l[11]
+                            };
+                        })
+                    };
+                });
+
+                setProgress(100, 'Klaar');
+                init();
+            } catch (error) {
+                document.getElementById('content').innerHTML =
+                    '<div class="error-box"><strong>Fout bij laden van de offertes</strong><br><br>' +
+                    escapeHtml(error.message) + '</div>';
+                console.error(error);
+            }
+        }
+
+        function init() {
+            document.getElementById('filters').style.display = 'flex';
+            document.querySelector('.subtitle').textContent =
+                'Antwerpse Dakwerken — ' + (META.bonnen || allBons.length).toLocaleString('nl-BE') +
+                ' offertes, ' + (META.regels || 0).toLocaleString('nl-BE') + ' regelitems';
+            fillProjectFilter();
+            applyFilters();
+        }
+
+        function fillProjectFilter() {
+            const projects = Array.from(new Set(allBons.map(function (b) { return b.Project; })))
+                .filter(function (p) { return p; })
+                .sort(function (a, b) { return a.localeCompare(b, 'nl'); });
+            const select = document.getElementById('filterProject');
+            const frag = document.createDocumentFragment();
+            projects.forEach(function (p) {
+                const opt = document.createElement('option');
+                opt.value = p;
+                opt.textContent = p.length > 70 ? p.slice(0, 70) + '…' : p;
+                frag.appendChild(opt);
+            });
+            select.appendChild(frag);
+        }
+
+        function applyFilters() {
+            const bonFilter = document.getElementById('filterBon').value.toLowerCase().trim();
+            const projectFilter = document.getElementById('filterProject').value;
+            const tekstFilter = document.getElementById('filterTekst').value.toLowerCase().trim();
+            const regieOnly = document.getElementById('filterRegie').checked;
+
+            filteredBons = allBons.filter(function (bon) {
+                if (bonFilter && String(bon.Bon_Nr).toLowerCase().indexOf(bonFilter) === -1) return false;
+                if (projectFilter && bon.Project !== projectFilter) return false;
+                if (regieOnly && !bon.Lijnen.some(function (l) { return l.IsRegie; })) return false;
+                if (tekstFilter && !bon.Lijnen.some(function (l) {
+                    return l.Beschrijving.toLowerCase().indexOf(tekstFilter) !== -1;
+                })) return false;
+                return true;
+            });
+
+            currentIndex = 0;
+            showBon();
+        }
+
+        function escapeHtml(s) {
+            return String(s).replace(/[&<>"']/g, function (c) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+            });
+        }
+
+        function highlight(text, term) {
+            const safe = escapeHtml(text);
+            if (!term) return safe;
+            const idx = safe.toLowerCase().indexOf(term.toLowerCase());
+            if (idx === -1) return safe;
+            return safe.slice(0, idx) + '<mark>' + safe.slice(idx, idx + term.length) +
+                   '</mark>' + safe.slice(idx + term.length);
+        }
+
+        function fmt(n) {
+            return (n || 0).toLocaleString('nl-BE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function showBon() {
+            const content = document.getElementById('content');
+
+            if (filteredBons.length === 0) {
+                content.innerHTML = '<div class="no-results">Geen bonnen gevonden met deze filters.</div>';
+                return;
+            }
+
+            const bon = filteredBons[currentIndex];
+            const tekstFilter = document.getElementById('filterTekst').value.trim();
+            const bonTotalBedrag = bon.Lijnen.reduce(function (s, l) { return s + (l.Totaal || 0); }, 0);
+            const regieCount = bon.Lijnen.filter(function (l) { return l.IsRegie; }).length;
+
+            let html =
+                '<div class="bon-header">' +
+                    '<div>' +
+                        '<h2>Bon #' + escapeHtml(bon.Bon_Nr) + '</h2>' +
+                        '<div class="bon-info-item" style="margin-top:5px;">' +
+                            '<div class="bon-info-label">Datum</div>' +
+                            '<div class="bon-info-value">' + escapeHtml(bon.Datum) + '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="bon-info-item">' +
+                        '<div class="bon-info-label">Project</div>' +
+                        '<div class="bon-info-value">' + escapeHtml(bon.Project || '—') + '</div>' +
+                    '</div>' +
+                    '<div class="bon-info-item">' +
+                        '<div class="bon-info-label">Lijnen</div>' +
+                        '<div class="bon-info-value">' + bon.Lijnen.length +
+                            (regieCount ? ' <span class="regie-marker">' + regieCount + ' regie</span>' : '') +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="bon-info-item">' +
+                        '<div class="bon-info-label">Totaal bedrag</div>' +
+                        '<div class="bon-info-value">&euro; ' + fmt(bonTotalBedrag) + '</div>' +
+                    '</div>' +
+                    '<div class="navigation">' +
+                        '<div class="nav-buttons">' +
+                            '<button id="prevBtn" onclick="prevBon()">&larr; Vorige</button>' +
+                            '<button id="nextBtn" onclick="nextBon()">Volgende &rarr;</button>' +
+                        '</div>' +
+                        '<div class="counter">Bon <strong>' + (currentIndex + 1) +
+                            '</strong> van <strong>' + filteredBons.length.toLocaleString('nl-BE') + '</strong></div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="table-wrapper"><table><thead><tr>' +
+                    '<th class="col-small">Lijn</th><th class="col-small">Hoofd</th>' +
+                    '<th class="col-small">Deel</th><th class="col-small">Volg</th>' +
+                    '<th class="col-small">Groep</th><th class="col-medium">Nr 1</th>' +
+                    '<th>Beschrijving</th><th class="col-medium">Aantal</th>' +
+                    '<th style="width:60px;">Eenheid</th><th class="col-medium">&euro;/eenheid</th>' +
+                    '<th class="col-medium">Totaal</th>' +
+                '</tr></thead><tbody>';
+
+            const rows = bon.Lijnen.map(function (lijn) {
+                const isHit = tekstFilter &&
+                    lijn.Beschrijving.toLowerCase().indexOf(tekstFilter.toLowerCase()) !== -1;
+                const cls = lijn.IsRegie ? 'regie' : (isHit ? 'hit' : '');
+                const marker = lijn.IsRegie ? '<span class="regie-marker">REGIE</span>' : '';
+                return '<tr class="' + cls + '">' +
+                    '<td class="lijnnr">' + escapeHtml(lijn.Lijnnr) + '</td>' +
+                    '<td class="dim">' + escapeHtml(lijn.Hoofdstuk) + '</td>' +
+                    '<td class="dim">' + escapeHtml(lijn.Deelstuk) + '</td>' +
+                    '<td class="dim">' + escapeHtml(lijn.Volgnr) + '</td>' +
+                    '<td class="dim">' + escapeHtml(lijn.Groep) + '</td>' +
+                    '<td style="color:#667eea; font-weight:600;">' + escapeHtml(lijn.Nr1) + '</td>' +
+                    '<td>' + marker + highlight(lijn.Beschrijving, tekstFilter) + '</td>' +
+                    '<td class="aantal">' + fmt(lijn.Aantal) + '</td>' +
+                    '<td class="dim">' + escapeHtml(lijn.Eenheid) + '</td>' +
+                    '<td class="prijs">&euro; ' + fmt(lijn.Prijs) + '</td>' +
+                    '<td class="totaal">&euro; ' + fmt(lijn.Totaal) + '</td>' +
+                '</tr>';
+            }).join('');
+
+            html += rows + '</tbody></table>' +
+                '<div class="bon-totaal">TOTAAL BON: &euro; ' + fmt(bonTotalBedrag) + '</div></div>';
+
+            content.innerHTML = html;
+
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            document.getElementById('nextBtn').disabled = currentIndex === filteredBons.length - 1;
+        }
+
+        function prevBon() {
+            if (currentIndex > 0) { currentIndex--; showBon(); window.scrollTo(0, 0); }
+        }
+
+        function nextBon() {
+            if (currentIndex < filteredBons.length - 1) { currentIndex++; showBon(); window.scrollTo(0, 0); }
+        }
+
+        // Debounce the text inputs so typing stays responsive across 11.5k bonnen
+        function debounce(fn, ms) {
+            let t;
+            return function () { clearTimeout(t); t = setTimeout(fn, ms); };
+        }
+        const debouncedFilter = debounce(applyFilters, 200);
+
+        document.getElementById('filterBon').addEventListener('input', debouncedFilter);
+        document.getElementById('filterTekst').addEventListener('input', debouncedFilter);
+        document.getElementById('filterProject').addEventListener('change', applyFilters);
+        document.getElementById('filterRegie').addEventListener('change', applyFilters);
+
+        document.addEventListener('keydown', function (e) {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+            if (e.key === 'ArrowLeft') prevBon();
+            if (e.key === 'ArrowRight') nextBon();
+        });
+
+        loadData();
+    </script>
+</body>
+</html>
