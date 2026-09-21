@@ -9,157 +9,154 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f7fa;
-            padding: 20px;
-            color: #333;
+            background: #f5f7fa; padding: 20px; color: #333;
         }
 
         .container {
-            max-width: 1600px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            padding: 30px;
+            max-width: 1600px; margin: 0 auto; background: white;
+            border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); padding: 30px;
         }
 
         h1 { color: #2c3e50; margin-bottom: 8px; font-size: 2em; }
-
         .subtitle { color: #7f8c8d; margin-bottom: 25px; font-size: 0.95em; }
 
-        .loading {
-            text-align: center;
-            padding: 60px 20px;
-            color: #7f8c8d;
-            font-size: 1.1em;
+        /* ---------- inlogscherm ---------- */
+        .login-wrap {
+            max-width: 380px; margin: 40px auto 60px; text-align: center;
         }
+        .login-wrap h2 { font-size: 1.15em; color: #2c3e50; margin-bottom: 8px; }
+        .login-wrap p { color: #7f8c8d; font-size: 0.9em; margin-bottom: 22px; line-height: 1.5; }
+        .login-row { display: flex; gap: 10px; }
+        .login-row input {
+            flex: 1; padding: 11px 13px; border: 1px solid #ddd;
+            border-radius: 6px; font-size: 1em;
+        }
+        .login-row input:focus {
+            outline: none; border-color: #667eea; box-shadow: 0 0 5px rgba(102,126,234,0.3);
+        }
+        .login-row button {
+            background: #667eea; color: white; border: none;
+            padding: 11px 22px; border-radius: 6px; font-weight: 600;
+            font-size: 0.95em; cursor: pointer;
+        }
+        .login-row button:hover:not(:disabled) { background: #5568d3; }
+        .login-row button:disabled { opacity: 0.55; cursor: not-allowed; }
+        .login-msg { margin-top: 14px; font-size: 0.88em; min-height: 20px; }
+        .login-msg.err { color: #c62828; }
+        .login-msg.busy { color: #7f8c8d; }
 
         .spinner {
-            display: inline-block;
-            width: 30px; height: 30px;
-            border: 4px solid #ddd;
-            border-top-color: #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-right: 10px;
-            vertical-align: middle;
+            display: inline-block; width: 15px; height: 15px;
+            border: 2px solid #ddd; border-top-color: #667eea; border-radius: 50%;
+            animation: spin 1s linear infinite; margin-right: 7px; vertical-align: -2px;
         }
-
         @keyframes spin { to { transform: rotate(360deg); } }
 
         .progress-bar {
-            width: 300px; height: 6px;
-            background: #e5e5e5;
-            border-radius: 3px;
-            margin: 18px auto 0;
-            overflow: hidden;
+            width: 100%; height: 5px; background: #e5e5e5;
+            border-radius: 3px; margin-top: 16px; overflow: hidden;
         }
-
         .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            width: 0%;
-            transition: width 0.2s;
+            height: 100%; background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%; transition: width 0.2s;
         }
 
+        /* ---------- filters ---------- */
         .filters {
-            background: #f8f9fa;
-            padding: 18px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            align-items: center;
-            border-left: 4px solid #667eea;
+            background: #f8f9fa; padding: 18px; border-radius: 8px;
+            margin-bottom: 20px; border-left: 4px solid #667eea;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px 18px;
         }
 
-        .filter-group { display: flex; gap: 8px; align-items: center; }
+        .filter-group { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
 
         .filter-group label {
-            font-weight: 600; color: #555;
-            font-size: 0.9em; white-space: nowrap;
+            font-weight: 600; color: #555; font-size: 0.82em;
+            text-transform: uppercase; letter-spacing: 0.3px;
         }
 
         .filter-group input, .filter-group select {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 0.9em;
-            min-width: 150px;
+            padding: 8px 11px; border: 1px solid #ddd; border-radius: 5px;
+            font-size: 0.9em; width: 100%; background: white;
         }
 
-        .filter-group select { max-width: 320px; }
-
         .filter-group input:focus, .filter-group select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+            outline: none; border-color: #667eea; box-shadow: 0 0 5px rgba(102,126,234,0.3);
+        }
+
+        .filter-actions {
+            grid-column: 1 / -1; display: flex; gap: 18px;
+            align-items: center; flex-wrap: wrap; padding-top: 4px;
         }
 
         .regie-toggle {
-            display: flex; align-items: center; gap: 6px;
-            font-size: 0.9em; font-weight: 600; color: #555;
-            cursor: pointer;
+            display: flex; align-items: center; gap: 7px;
+            font-size: 0.9em; font-weight: 600; color: #555; cursor: pointer;
         }
+        .regie-toggle input { width: 16px; height: 16px; cursor: pointer; }
 
-        .regie-toggle input { min-width: auto; width: 16px; height: 16px; cursor: pointer; }
+        .btn-reset {
+            background: white; border: 1px solid #ccc; color: #555;
+            padding: 7px 14px; border-radius: 5px; font-size: 0.85em;
+            font-weight: 600; cursor: pointer;
+        }
+        .btn-reset:hover { background: #eee; }
 
+        .result-count { font-size: 0.9em; color: #667eea; font-weight: 600; margin-left: auto; }
+
+        /* ---------- bon ---------- */
         .bon-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: grid;
-            grid-template-columns: 1.4fr 1.4fr 0.7fr 0.9fr auto;
-            gap: 25px;
-            align-items: start;
+            color: white; padding: 22px 25px; border-radius: 8px; margin-bottom: 20px;
         }
 
-        .bon-header h2 { font-size: 1.8em; margin-bottom: 5px; }
+        .bon-top {
+            display: flex; justify-content: space-between;
+            align-items: flex-start; gap: 20px; flex-wrap: wrap;
+            padding-bottom: 16px; margin-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.25);
+        }
+
+        .bon-top h2 { font-size: 1.7em; }
+
+        .type-badge {
+            display: inline-block; background: rgba(255,255,255,0.22);
+            padding: 4px 11px; border-radius: 4px; font-size: 0.6em;
+            font-weight: 600; vertical-align: middle; margin-left: 10px; letter-spacing: 0.4px;
+        }
+
+        .bon-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 18px 26px; }
 
         .bon-info-item { display: flex; flex-direction: column; min-width: 0; }
 
         .bon-info-label {
-            font-size: 0.85em; opacity: 0.9;
-            margin-bottom: 4px; font-weight: 600;
+            font-size: 0.75em; opacity: 0.85; margin-bottom: 4px;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px;
         }
 
-        .bon-info-value { font-size: 1.1em; font-weight: 500; word-break: break-word; }
+        .bon-info-value { font-size: 1.02em; font-weight: 500; word-break: break-word; line-height: 1.4; }
+        .bon-info-value.muted { opacity: 0.55; font-style: italic; font-weight: 400; }
 
-        .navigation { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
-
+        .navigation { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
         .nav-buttons { display: flex; gap: 10px; }
 
         .nav-buttons button {
-            background: white; color: #667eea;
-            border: 2px solid white;
-            padding: 10px 16px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            white-space: nowrap;
+            background: white; color: #667eea; border: 2px solid white;
+            padding: 9px 15px; border-radius: 6px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; white-space: nowrap;
         }
-
         .nav-buttons button:hover:not(:disabled) { background: #f0f0ff; transform: translateY(-2px); }
         .nav-buttons button:disabled { opacity: 0.45; cursor: not-allowed; }
 
-        .counter { font-size: 0.9em; opacity: 0.95; white-space: nowrap; }
+        .counter { font-size: 0.88em; opacity: 0.95; white-space: nowrap; }
 
         .table-wrapper { overflow-x: auto; margin-top: 10px; }
-
         table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
-
         thead { background: #f8f9fa; border-bottom: 2px solid #667eea; }
-
         thead th {
-            padding: 12px; text-align: left;
-            font-weight: 600; color: #2c3e50;
-            position: sticky; top: 0; background: #f8f9fa;
+            padding: 12px; text-align: left; font-weight: 600;
+            color: #2c3e50; position: sticky; top: 0; background: #f8f9fa;
         }
-
         tbody tr { border-bottom: 1px solid #e5e5e5; }
         tbody tr:hover { background: #f8f9fa; }
         tbody tr.regie { background: #ffe8cc; }
@@ -168,10 +165,8 @@
         tbody tr.hit:hover { background: #fff59d; }
 
         td { padding: 12px; vertical-align: top; }
-
         .col-small { width: 50px; }
         .col-medium { width: 100px; }
-
         .lijnnr { font-weight: 600; color: #667eea; }
         .aantal, .prijs { text-align: right; white-space: nowrap; }
         .totaal { text-align: right; font-weight: 600; white-space: nowrap; }
@@ -180,139 +175,200 @@
         mark { background: #ffd54f; padding: 0 2px; border-radius: 2px; }
 
         .regie-marker {
-            display: inline-block;
-            background: #ff6b35; color: white;
-            padding: 3px 7px; border-radius: 4px;
-            font-size: 0.78em; font-weight: 600;
-            margin-right: 8px; vertical-align: middle;
+            display: inline-block; background: #ff6b35; color: white;
+            padding: 3px 7px; border-radius: 4px; font-size: 0.78em;
+            font-weight: 600; margin-right: 8px; vertical-align: middle;
         }
 
         .bon-totaal {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white; padding: 15px;
-            text-align: right;
-            font-size: 1.1em; font-weight: 600;
-            margin-top: 10px;
-            border-radius: 0 0 8px 8px;
+            color: white; padding: 15px; text-align: right;
+            font-size: 1.1em; font-weight: 600; margin-top: 10px; border-radius: 0 0 8px 8px;
         }
 
-        .no-results {
-            text-align: center; padding: 60px 20px;
-            color: #7f8c8d; font-size: 1.1em;
+        .empty-note {
+            text-align: center; padding: 40px 20px; color: #999;
+            font-style: italic; background: #fafafa; border-radius: 6px;
         }
+
+        .no-results { text-align: center; padding: 60px 20px; color: #7f8c8d; font-size: 1.1em; }
 
         .error-box {
             background: #ffebee; border-left: 4px solid #e53935;
             padding: 20px; border-radius: 6px; color: #b71c1c;
         }
 
-        #content { min-height: 400px; }
-
-        @media (max-width: 1100px) {
-            .bon-header { grid-template-columns: 1fr 1fr; }
-            .navigation { align-items: flex-start; }
+        .footer-note {
+            margin-top: 26px; padding-top: 14px; border-top: 1px solid #eee;
+            font-size: 0.78em; color: #aaa; display: flex;
+            justify-content: space-between; flex-wrap: wrap; gap: 10px;
         }
+        .footer-note button {
+            background: none; border: none; color: #999;
+            text-decoration: underline; cursor: pointer; font-size: 1em; padding: 0;
+        }
+
+        #content { min-height: 300px; }
+
+        @media (max-width: 1150px) { .filters { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 620px)  { .filters { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Offertes Browser</h1>
-        <div class="subtitle">Antwerpse Dakwerken &mdash; alle offertes met alle regelitems</div>
+        <div class="subtitle" id="subtitle">Antwerpse Dakwerken &mdash; alle bonnen met alle regelitems</div>
 
+        <!-- inlogscherm -->
+        <div class="login-wrap" id="loginWrap">
+            <h2>Beveiligde toegang</h2>
+            <p>Geef het wachtwoord om de offertes te openen.</p>
+            <div class="login-row">
+                <input type="password" id="pw" placeholder="Wachtwoord" autocomplete="current-password">
+                <button id="btnLogin" type="button">Openen</button>
+            </div>
+            <div class="login-msg" id="loginMsg"></div>
+            <div class="progress-bar" id="progWrap" style="display:none;">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- filters -->
         <div class="filters" id="filters" style="display: none;">
             <div class="filter-group">
-                <label for="filterBon">Bon Nr:</label>
+                <label for="filterBon">Bon nr</label>
                 <input type="text" id="filterBon" placeholder="bijv. 2026238">
             </div>
             <div class="filter-group">
-                <label for="filterProject">Project:</label>
-                <select id="filterProject">
-                    <option value="">-- Alle projecten --</option>
-                </select>
+                <label for="filterKlant">Klantnaam / klantnr</label>
+                <input type="text" id="filterKlant" placeholder="naam of nummer">
             </div>
             <div class="filter-group">
-                <label for="filterTekst">Zoek in beschrijving:</label>
-                <input type="text" id="filterTekst" placeholder="bijv. regie, uren, man">
+                <label for="filterAdres">Klant adres</label>
+                <input type="text" id="filterAdres" placeholder="bijv. Passendalestraat">
             </div>
-            <label class="regie-toggle">
-                <input type="checkbox" id="filterRegie"> Alleen bonnen met regiewerk
-            </label>
+            <div class="filter-group">
+                <label for="filterProjectnr">Projectnummer</label>
+                <input type="text" id="filterProjectnr" placeholder="bijv. 20150516">
+            </div>
+            <div class="filter-group">
+                <label for="filterProject">Projectnaam</label>
+                <select id="filterProject"><option value="">-- Alle projecten --</option></select>
+            </div>
+            <div class="filter-group">
+                <label for="filterType">Bontype</label>
+                <select id="filterType"><option value="">-- Alle types --</option></select>
+            </div>
+            <div class="filter-group" style="grid-column: span 2;">
+                <label for="filterTekst">Zoek in beschrijving</label>
+                <input type="text" id="filterTekst" placeholder="bijv. regie, uren, isolatie">
+            </div>
+            <div class="filter-actions">
+                <label class="regie-toggle">
+                    <input type="checkbox" id="filterRegie"> Alleen bonnen met regiewerk
+                </label>
+                <button class="btn-reset" id="btnReset" type="button">Filters wissen</button>
+                <span class="result-count" id="resultCount"></span>
+            </div>
         </div>
 
-        <div id="content">
-            <div class="loading">
-                <div><span class="spinner"></span> Offertes laden&hellip;</div>
-                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                <div id="progressText" style="margin-top:10px; font-size:0.85em;">Verbinden&hellip;</div>
-            </div>
+        <div id="content"></div>
+
+        <div class="footer-note" id="footer" style="display:none;">
+            <span id="verNote"></span>
+            <button id="btnLock" type="button">Vergrendelen</button>
         </div>
     </div>
 
     <script>
-        let currentIndex = 0;
-        let filteredBons = [];
-        let allBons = [];
-        let META = {};
+        const VERSIE = 'v3';
+        const ITER = 200000;
 
-        function setProgress(pct, text) {
-            const fill = document.getElementById('progressFill');
-            const txt = document.getElementById('progressText');
-            if (fill) fill.style.width = pct + '%';
-            if (txt && text) txt.textContent = text;
+        let currentIndex = 0, filteredBons = [], allBons = [], META = {};
+
+        function setProgress(pct) {
+            document.getElementById('progWrap').style.display = 'block';
+            document.getElementById('progressFill').style.width = pct + '%';
+        }
+        function msg(text, cls) {
+            const el = document.getElementById('loginMsg');
+            el.className = 'login-msg ' + (cls || '');
+            el.innerHTML = text;
         }
 
-        async function loadData() {
+        async function unlock(password) {
+            const btn = document.getElementById('btnLogin');
+            btn.disabled = true;
+            document.getElementById('pw').disabled = true;
+
             try {
-                setProgress(5, 'Data downloaden…');
+                msg('<span class="spinner"></span>Data downloaden…', 'busy');
+                setProgress(8);
 
-                const response = await fetch('data.bin');
-                if (!response.ok) throw new Error('HTTP ' + response.status + ' bij ophalen van data.bin');
+                const resp = await fetch('data.bin', { cache: 'no-cache' });
+                if (!resp.ok) throw new Error('HTTP ' + resp.status + ' bij ophalen van data.bin');
 
-                // Stream the download so we can show real progress
-                const total = parseInt(response.headers.get('content-length') || '0', 10);
-                const reader = response.body.getReader();
+                const total = parseInt(resp.headers.get('content-length') || '0', 10);
+                const reader = resp.body.getReader();
                 const chunks = [];
-                let received = 0;
-
+                let got = 0;
                 while (true) {
                     const { done, value } = await reader.read();
                     if (done) break;
                     chunks.push(value);
-                    received += value.length;
-                    if (total) {
-                        setProgress(5 + (received / total) * 65,
-                            'Downloaden… ' + (received / 1048576).toFixed(1) + ' / ' + (total / 1048576).toFixed(1) + ' MB');
-                    } else {
-                        setProgress(40, 'Downloaden… ' + (received / 1048576).toFixed(1) + ' MB');
-                    }
+                    got += value.length;
+                    setProgress(total ? 8 + (got / total) * 55 : 35);
                 }
-
-                let blob = new Blob(chunks);
+                let buf = new Uint8Array(got);
+                let off = 0;
+                for (const c of chunks) { buf.set(c, off); off += c.length; }
                 chunks.length = 0;
 
-                setProgress(75, 'Uitpakken…');
-
-                let text;
-                if (typeof DecompressionStream !== 'undefined') {
-                    const ds = new DecompressionStream('gzip');
-                    text = await new Response(blob.stream().pipeThrough(ds)).text();
-                } else {
-                    throw new Error('Je browser ondersteunt geen gzip-decompressie. Gebruik een recente versie van Chrome, Edge, Firefox of Safari.');
+                if (buf.length < 40 || String.fromCharCode(buf[0], buf[1], buf[2], buf[3]) !== 'ADW1') {
+                    throw new Error('FORMAAT');
                 }
 
-                setProgress(90, 'Verwerken…');
+                msg('<span class="spinner"></span>Ontsleutelen…', 'busy');
+                setProgress(70);
+
+                const salt = buf.slice(4, 20);
+                const iv   = buf.slice(20, 32);
+                const ct   = buf.slice(32);
+
+                const base = await crypto.subtle.importKey(
+                    'raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+                const key = await crypto.subtle.deriveKey(
+                    { name: 'PBKDF2', salt: salt, iterations: ITER, hash: 'SHA-256' },
+                    base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+
+                let gz;
+                try {
+                    gz = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv }, key, ct);
+                } catch (e) {
+                    throw new Error('WACHTWOORD');
+                }
+
+                msg('<span class="spinner"></span>Uitpakken…', 'busy');
+                setProgress(84);
+
+                if (typeof DecompressionStream === 'undefined') {
+                    throw new Error('Je browser is te oud. Gebruik een recente Chrome, Edge, Firefox of Safari.');
+                }
+                const ds = new DecompressionStream('gzip');
+                let text = await new Response(new Blob([gz]).stream().pipeThrough(ds)).text();
+
+                msg('<span class="spinner"></span>Verwerken…', 'busy');
+                setProgress(93);
 
                 const payload = JSON.parse(text);
                 text = null;
                 META = payload.meta || {};
 
-                // Expand compact arrays back into objects
-                allBons = payload.b.map(function (row) {
+                allBons = payload.b.map(function (r) {
                     return {
-                        Bon_Nr: row[0],
-                        Datum: row[1],
-                        Project: row[2],
-                        Lijnen: row[3].map(function (l) {
+                        Bon_Nr: r[0], Datum: r[1], Project: r[2], Type: r[3], Projectnr: r[4],
+                        Klantnr: r[5], Naam: r[6], Adres: r[7], Excl: r[8],
+                        Lijnen: (r[9] || []).map(function (l) {
                             return {
                                 Lijnnr: l[0], Hoofdstuk: l[1], Deelstuk: l[2], Volgnr: l[3],
                                 Groep: l[4], Nr1: l[5], Beschrijving: l[6], Aantal: l[7],
@@ -322,62 +378,92 @@
                     };
                 });
 
-                setProgress(100, 'Klaar');
+                setProgress(100);
+                try { sessionStorage.setItem('adw_pw', password); } catch (e) {}
                 init();
             } catch (error) {
-                document.getElementById('content').innerHTML =
-                    '<div class="error-box"><strong>Fout bij laden van de offertes</strong><br><br>' +
-                    escapeHtml(error.message) + '</div>';
+                document.getElementById('pw').disabled = false;
+                btn.disabled = false;
+                document.getElementById('progWrap').style.display = 'none';
+
+                if (error.message === 'WACHTWOORD') {
+                    msg('Verkeerd wachtwoord. Probeer opnieuw.', 'err');
+                    document.getElementById('pw').select();
+                } else if (error.message === 'FORMAAT') {
+                    msg('Het bestand <code>data.bin</code> hoort niet bij deze versie van de pagina. ' +
+                        'Upload beide bestanden samen opnieuw.', 'err');
+                } else {
+                    msg('Fout: ' + escapeHtml(error.message), 'err');
+                }
                 console.error(error);
             }
         }
 
         function init() {
-            document.getElementById('filters').style.display = 'flex';
-            document.querySelector('.subtitle').textContent =
+            document.getElementById('loginWrap').style.display = 'none';
+            document.getElementById('filters').style.display = 'grid';
+            document.getElementById('footer').style.display = 'flex';
+            document.getElementById('verNote').textContent =
+                'Offertes Browser ' + VERSIE + ' — ' +
+                (META.bonnen || 0).toLocaleString('nl-BE') + ' bonnen, ' +
+                (META.regels || 0).toLocaleString('nl-BE') + ' regelitems';
+            document.getElementById('subtitle').textContent =
                 'Antwerpse Dakwerken — ' + (META.bonnen || allBons.length).toLocaleString('nl-BE') +
-                ' offertes, ' + (META.regels || 0).toLocaleString('nl-BE') + ' regelitems';
-            fillProjectFilter();
+                ' bonnen, ' + (META.regels || 0).toLocaleString('nl-BE') + ' regelitems';
+            fillDropdown('filterProject', function (b) { return b.Project; }, 70);
+            fillDropdown('filterType', function (b) { return b.Type; }, 45);
             applyFilters();
         }
 
-        function fillProjectFilter() {
-            const projects = Array.from(new Set(allBons.map(function (b) { return b.Project; })))
-                .filter(function (p) { return p; })
+        function fillDropdown(id, pick, maxLen) {
+            const vals = Array.from(new Set(allBons.map(pick)))
+                .filter(function (v) { return v; })
                 .sort(function (a, b) { return a.localeCompare(b, 'nl'); });
-            const select = document.getElementById('filterProject');
+            const select = document.getElementById(id);
             const frag = document.createDocumentFragment();
-            projects.forEach(function (p) {
-                const opt = document.createElement('option');
-                opt.value = p;
-                opt.textContent = p.length > 70 ? p.slice(0, 70) + '…' : p;
-                frag.appendChild(opt);
+            vals.forEach(function (v) {
+                const o = document.createElement('option');
+                o.value = v;
+                o.textContent = v.length > maxLen ? v.slice(0, maxLen) + '…' : v;
+                frag.appendChild(o);
             });
             select.appendChild(frag);
         }
 
         function applyFilters() {
-            const bonFilter = document.getElementById('filterBon').value.toLowerCase().trim();
-            const projectFilter = document.getElementById('filterProject').value;
-            const tekstFilter = document.getElementById('filterTekst').value.toLowerCase().trim();
-            const regieOnly = document.getElementById('filterRegie').checked;
+            const fBon   = document.getElementById('filterBon').value.toLowerCase().trim();
+            const fKlant = document.getElementById('filterKlant').value.toLowerCase().trim();
+            const fAdres = document.getElementById('filterAdres').value.toLowerCase().trim();
+            const fPnr   = document.getElementById('filterProjectnr').value.toLowerCase().trim();
+            const fProj  = document.getElementById('filterProject').value;
+            const fType  = document.getElementById('filterType').value;
+            const fTekst = document.getElementById('filterTekst').value.toLowerCase().trim();
+            const fRegie = document.getElementById('filterRegie').checked;
 
-            filteredBons = allBons.filter(function (bon) {
-                if (bonFilter && String(bon.Bon_Nr).toLowerCase().indexOf(bonFilter) === -1) return false;
-                if (projectFilter && bon.Project !== projectFilter) return false;
-                if (regieOnly && !bon.Lijnen.some(function (l) { return l.IsRegie; })) return false;
-                if (tekstFilter && !bon.Lijnen.some(function (l) {
-                    return l.Beschrijving.toLowerCase().indexOf(tekstFilter) !== -1;
+            filteredBons = allBons.filter(function (b) {
+                if (fBon && String(b.Bon_Nr).toLowerCase().indexOf(fBon) === -1) return false;
+                if (fKlant && (b.Naam + ' ' + b.Klantnr).toLowerCase().indexOf(fKlant) === -1) return false;
+                if (fAdres && b.Adres.toLowerCase().indexOf(fAdres) === -1) return false;
+                if (fPnr && String(b.Projectnr).toLowerCase().indexOf(fPnr) === -1) return false;
+                if (fProj && b.Project !== fProj) return false;
+                if (fType && b.Type !== fType) return false;
+                if (fRegie && !b.Lijnen.some(function (l) { return l.IsRegie; })) return false;
+                if (fTekst && !b.Lijnen.some(function (l) {
+                    return l.Beschrijving.toLowerCase().indexOf(fTekst) !== -1;
                 })) return false;
                 return true;
             });
+
+            document.getElementById('resultCount').textContent =
+                filteredBons.length.toLocaleString('nl-BE') + ' van ' +
+                allBons.length.toLocaleString('nl-BE') + ' bonnen';
 
             currentIndex = 0;
             showBon();
         }
 
         function escapeHtml(s) {
-            return String(s).replace(/[&<>"']/g, function (c) {
+            return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
                 return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
             });
         }
@@ -395,6 +481,13 @@
             return (n || 0).toLocaleString('nl-BE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
+        function infoItem(label, value, term) {
+            const has = value !== '' && value != null;
+            return '<div class="bon-info-item"><div class="bon-info-label">' + label + '</div>' +
+                '<div class="bon-info-value' + (has ? '' : ' muted') + '">' +
+                (has ? highlight(value, term) : 'niet ingevuld') + '</div></div>';
+        }
+
         function showBon() {
             const content = document.getElementById('content');
 
@@ -404,99 +497,125 @@
             }
 
             const bon = filteredBons[currentIndex];
-            const tekstFilter = document.getElementById('filterTekst').value.trim();
-            const bonTotalBedrag = bon.Lijnen.reduce(function (s, l) { return s + (l.Totaal || 0); }, 0);
+            const tTekst = document.getElementById('filterTekst').value.trim();
+            const tKlant = document.getElementById('filterKlant').value.trim();
+            const tAdres = document.getElementById('filterAdres').value.trim();
+            const tPnr   = document.getElementById('filterProjectnr').value.trim();
+
+            const totaal = bon.Lijnen.reduce(function (s, l) { return s + (l.Totaal || 0); }, 0);
             const regieCount = bon.Lijnen.filter(function (l) { return l.IsRegie; }).length;
+
+            const klantBlok = bon.Naam
+                ? highlight(bon.Naam, tKlant) + '<br><span style="opacity:.8; font-size:.88em;">nr ' +
+                  highlight(bon.Klantnr, tKlant) + '</span>'
+                : '<span style="opacity:.8;">nr </span>' + highlight(bon.Klantnr, tKlant);
 
             let html =
                 '<div class="bon-header">' +
-                    '<div>' +
-                        '<h2>Bon #' + escapeHtml(bon.Bon_Nr) + '</h2>' +
-                        '<div class="bon-info-item" style="margin-top:5px;">' +
-                            '<div class="bon-info-label">Datum</div>' +
-                            '<div class="bon-info-value">' + escapeHtml(bon.Datum) + '</div>' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="bon-info-item">' +
-                        '<div class="bon-info-label">Project</div>' +
-                        '<div class="bon-info-value">' + escapeHtml(bon.Project || '—') + '</div>' +
-                    '</div>' +
-                    '<div class="bon-info-item">' +
-                        '<div class="bon-info-label">Lijnen</div>' +
-                        '<div class="bon-info-value">' + bon.Lijnen.length +
-                            (regieCount ? ' <span class="regie-marker">' + regieCount + ' regie</span>' : '') +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="bon-info-item">' +
-                        '<div class="bon-info-label">Totaal bedrag</div>' +
-                        '<div class="bon-info-value">&euro; ' + fmt(bonTotalBedrag) + '</div>' +
-                    '</div>' +
-                    '<div class="navigation">' +
-                        '<div class="nav-buttons">' +
+                    '<div class="bon-top">' +
+                        '<h2>Bon #' + escapeHtml(bon.Bon_Nr) +
+                            (bon.Type ? '<span class="type-badge">' + escapeHtml(bon.Type) + '</span>' : '') +
+                        '</h2>' +
+                        '<div class="navigation"><div class="nav-buttons">' +
                             '<button id="prevBtn" onclick="prevBon()">&larr; Vorige</button>' +
                             '<button id="nextBtn" onclick="nextBon()">Volgende &rarr;</button>' +
-                        '</div>' +
-                        '<div class="counter">Bon <strong>' + (currentIndex + 1) +
-                            '</strong> van <strong>' + filteredBons.length.toLocaleString('nl-BE') + '</strong></div>' +
+                        '</div><div class="counter">Bon <strong>' + (currentIndex + 1) +
+                            '</strong> van <strong>' + filteredBons.length.toLocaleString('nl-BE') +
+                        '</strong></div></div>' +
                     '</div>' +
-                '</div>' +
-                '<div class="table-wrapper"><table><thead><tr>' +
-                    '<th class="col-small">Lijn</th><th class="col-small">Hoofd</th>' +
-                    '<th class="col-small">Deel</th><th class="col-small">Volg</th>' +
-                    '<th class="col-small">Groep</th><th class="col-medium">Nr 1</th>' +
-                    '<th>Beschrijving</th><th class="col-medium">Aantal</th>' +
-                    '<th style="width:60px;">Eenheid</th><th class="col-medium">&euro;/eenheid</th>' +
-                    '<th class="col-medium">Totaal</th>' +
-                '</tr></thead><tbody>';
+                    '<div class="bon-grid">' +
+                        '<div class="bon-info-item"><div class="bon-info-label">Klant</div>' +
+                            '<div class="bon-info-value">' + klantBlok + '</div></div>' +
+                        infoItem('Adres', bon.Adres, tAdres) +
+                        infoItem('Projectnummer', bon.Projectnr, tPnr) +
+                        infoItem('Projectnaam', bon.Project, '') +
+                        '<div class="bon-info-item"><div class="bon-info-label">Datum</div>' +
+                            '<div class="bon-info-value">' + escapeHtml(bon.Datum || '—') + '</div></div>' +
+                        '<div class="bon-info-item"><div class="bon-info-label">Lijnen</div>' +
+                            '<div class="bon-info-value">' + bon.Lijnen.length +
+                            (regieCount ? ' <span class="regie-marker">' + regieCount + ' regie</span>' : '') +
+                            '</div></div>' +
+                        '<div class="bon-info-item"><div class="bon-info-label">Totaal excl. btw</div>' +
+                            '<div class="bon-info-value">&euro; ' + fmt(totaal) + '</div></div>' +
+                    '</div>' +
+                '</div>';
 
-            const rows = bon.Lijnen.map(function (lijn) {
-                const isHit = tekstFilter &&
-                    lijn.Beschrijving.toLowerCase().indexOf(tekstFilter.toLowerCase()) !== -1;
-                const cls = lijn.IsRegie ? 'regie' : (isHit ? 'hit' : '');
-                const marker = lijn.IsRegie ? '<span class="regie-marker">REGIE</span>' : '';
+            if (bon.Lijnen.length === 0) {
+                html += '<div class="empty-note">Deze bon heeft geen regelitems in Bonlijnen.xlsx.</div>';
+                content.innerHTML = html;
+                document.getElementById('prevBtn').disabled = currentIndex === 0;
+                document.getElementById('nextBtn').disabled = currentIndex === filteredBons.length - 1;
+                return;
+            }
+
+            html += '<div class="table-wrapper"><table><thead><tr>' +
+                '<th class="col-small">Lijn</th><th class="col-small">Hoofd</th>' +
+                '<th class="col-small">Deel</th><th class="col-small">Volg</th>' +
+                '<th class="col-small">Groep</th><th class="col-medium">Nr 1</th>' +
+                '<th>Beschrijving</th><th class="col-medium">Aantal</th>' +
+                '<th style="width:60px;">Eenheid</th><th class="col-medium">&euro;/eenheid</th>' +
+                '<th class="col-medium">Totaal</th></tr></thead><tbody>';
+
+            html += bon.Lijnen.map(function (l) {
+                const isHit = tTekst && l.Beschrijving.toLowerCase().indexOf(tTekst.toLowerCase()) !== -1;
+                const cls = l.IsRegie ? 'regie' : (isHit ? 'hit' : '');
+                const marker = l.IsRegie ? '<span class="regie-marker">REGIE</span>' : '';
                 return '<tr class="' + cls + '">' +
-                    '<td class="lijnnr">' + escapeHtml(lijn.Lijnnr) + '</td>' +
-                    '<td class="dim">' + escapeHtml(lijn.Hoofdstuk) + '</td>' +
-                    '<td class="dim">' + escapeHtml(lijn.Deelstuk) + '</td>' +
-                    '<td class="dim">' + escapeHtml(lijn.Volgnr) + '</td>' +
-                    '<td class="dim">' + escapeHtml(lijn.Groep) + '</td>' +
-                    '<td style="color:#667eea; font-weight:600;">' + escapeHtml(lijn.Nr1) + '</td>' +
-                    '<td>' + marker + highlight(lijn.Beschrijving, tekstFilter) + '</td>' +
-                    '<td class="aantal">' + fmt(lijn.Aantal) + '</td>' +
-                    '<td class="dim">' + escapeHtml(lijn.Eenheid) + '</td>' +
-                    '<td class="prijs">&euro; ' + fmt(lijn.Prijs) + '</td>' +
-                    '<td class="totaal">&euro; ' + fmt(lijn.Totaal) + '</td>' +
-                '</tr>';
+                    '<td class="lijnnr">' + escapeHtml(l.Lijnnr) + '</td>' +
+                    '<td class="dim">' + escapeHtml(l.Hoofdstuk) + '</td>' +
+                    '<td class="dim">' + escapeHtml(l.Deelstuk) + '</td>' +
+                    '<td class="dim">' + escapeHtml(l.Volgnr) + '</td>' +
+                    '<td class="dim">' + escapeHtml(l.Groep) + '</td>' +
+                    '<td style="color:#667eea; font-weight:600;">' + escapeHtml(l.Nr1) + '</td>' +
+                    '<td>' + marker + highlight(l.Beschrijving, tTekst) + '</td>' +
+                    '<td class="aantal">' + fmt(l.Aantal) + '</td>' +
+                    '<td class="dim">' + escapeHtml(l.Eenheid) + '</td>' +
+                    '<td class="prijs">&euro; ' + fmt(l.Prijs) + '</td>' +
+                    '<td class="totaal">&euro; ' + fmt(l.Totaal) + '</td></tr>';
             }).join('');
 
-            html += rows + '</tbody></table>' +
-                '<div class="bon-totaal">TOTAAL BON: &euro; ' + fmt(bonTotalBedrag) + '</div></div>';
+            html += '</tbody></table><div class="bon-totaal">TOTAAL BON: &euro; ' + fmt(totaal) + '</div></div>';
 
             content.innerHTML = html;
-
             document.getElementById('prevBtn').disabled = currentIndex === 0;
             document.getElementById('nextBtn').disabled = currentIndex === filteredBons.length - 1;
         }
 
-        function prevBon() {
-            if (currentIndex > 0) { currentIndex--; showBon(); window.scrollTo(0, 0); }
-        }
+        function prevBon() { if (currentIndex > 0) { currentIndex--; showBon(); window.scrollTo(0, 0); } }
+        function nextBon() { if (currentIndex < filteredBons.length - 1) { currentIndex++; showBon(); window.scrollTo(0, 0); } }
 
-        function nextBon() {
-            if (currentIndex < filteredBons.length - 1) { currentIndex++; showBon(); window.scrollTo(0, 0); }
-        }
-
-        // Debounce the text inputs so typing stays responsive across 11.5k bonnen
         function debounce(fn, ms) {
             let t;
             return function () { clearTimeout(t); t = setTimeout(fn, ms); };
         }
-        const debouncedFilter = debounce(applyFilters, 200);
+        const deb = debounce(applyFilters, 200);
 
-        document.getElementById('filterBon').addEventListener('input', debouncedFilter);
-        document.getElementById('filterTekst').addEventListener('input', debouncedFilter);
-        document.getElementById('filterProject').addEventListener('change', applyFilters);
-        document.getElementById('filterRegie').addEventListener('change', applyFilters);
+        ['filterBon', 'filterKlant', 'filterAdres', 'filterProjectnr', 'filterTekst']
+            .forEach(function (id) { document.getElementById(id).addEventListener('input', deb); });
+        ['filterProject', 'filterType', 'filterRegie']
+            .forEach(function (id) { document.getElementById(id).addEventListener('change', applyFilters); });
+
+        document.getElementById('btnReset').addEventListener('click', function () {
+            ['filterBon', 'filterKlant', 'filterAdres', 'filterProjectnr', 'filterTekst']
+                .forEach(function (id) { document.getElementById(id).value = ''; });
+            document.getElementById('filterProject').value = '';
+            document.getElementById('filterType').value = '';
+            document.getElementById('filterRegie').checked = false;
+            applyFilters();
+        });
+
+        document.getElementById('btnLock').addEventListener('click', function () {
+            try { sessionStorage.removeItem('adw_pw'); } catch (e) {}
+            location.reload();
+        });
+
+        document.getElementById('btnLogin').addEventListener('click', function () {
+            const v = document.getElementById('pw').value;
+            if (v) unlock(v);
+        });
+        document.getElementById('pw').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' && this.value) unlock(this.value);
+        });
 
         document.addEventListener('keydown', function (e) {
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
@@ -504,7 +623,13 @@
             if (e.key === 'ArrowRight') nextBon();
         });
 
-        loadData();
+        // Binnen dezelfde browsersessie niet opnieuw om het wachtwoord vragen
+        (function () {
+            let saved = null;
+            try { saved = sessionStorage.getItem('adw_pw'); } catch (e) {}
+            if (saved) { document.getElementById('pw').value = saved; unlock(saved); }
+            else { document.getElementById('pw').focus(); }
+        })();
     </script>
 </body>
 </html>
